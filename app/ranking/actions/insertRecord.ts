@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/firestore";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 export const insertRecord = async (name: string, time: string) => {
   try {

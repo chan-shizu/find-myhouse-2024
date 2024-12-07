@@ -1,8 +1,7 @@
 import { Position } from "@/app/page";
 import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 import "./googleMap.css";
-import { useRouter } from "next/navigation";
 
 type Props = { transitToRankingPage: () => void };
 export type Position = { lat: number; lng: number };
