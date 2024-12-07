@@ -4,19 +4,17 @@ import { FC, useState } from "react";
 import "./googleMap.css";
 import { useRouter } from "next/navigation";
 
-type Props = {};
+type Props = { currentTime?: number };
 export type Position = { lat: number; lng: number };
 
 const containerStyle = {
   width: "100%",
   height: "100%",
 };
-
 const myHomePosition = {
   lat: 35.61283,
   lng: 139.52616,
 };
-
 const EARTH_RAD = 6378.137; // km
 const deg2rad = (deg: number) => {
   return (deg * Math.PI) / 180.0;
@@ -35,7 +33,7 @@ const calcDistance = (tappedPosition: Position) => {
   );
 };
 
-export const GoogleMapArea: FC<Props> = () => {
+export const GoogleMapArea: FC<Props> = ({ currentTime }) => {
   const [tappedPositions, setTappedPositions] = useState<Position[]>([]);
   const [size, setSize] = useState<undefined | google.maps.Size>(undefined);
   const router = useRouter();
@@ -54,7 +52,9 @@ export const GoogleMapArea: FC<Props> = () => {
   });
 
   if (tappedPositions.length > 0 && calcDistance(tappedPositions[tappedPositions.length - 1]) < 0.3) {
-    console.log("######### clear ################");
+    if (!currentTime) return;
+    localStorage.setItem("clear_time", currentTime.toFixed(1));
+    router.push("/ranking");
   }
 
   if (!isLoaded) return null;
@@ -62,8 +62,8 @@ export const GoogleMapArea: FC<Props> = () => {
   const onClickMap = (tapData: google.maps.MapMouseEvent) => {
     const lat = tapData.latLng?.lat();
     const lng = tapData.latLng?.lng();
-    console.log(lat, lng);
     if (!lat || !lng) return;
+
     setTappedPositions((prev) => [...prev, { lat: lat, lng: lng }]);
   };
 
@@ -98,7 +98,6 @@ export const GoogleMapArea: FC<Props> = () => {
           </InfoWindow>
         </div>
       ))}
-      {/* Child components, such as markers, info windows, etc. */}
     </GoogleMap>
   );
 };

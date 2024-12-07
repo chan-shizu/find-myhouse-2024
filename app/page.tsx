@@ -2,7 +2,7 @@
 
 import { ExplanationModal } from "@/components/explanationModal";
 import { GoogleMapArea } from "@/components/GoogleMapArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const explanationContents = [
   {
@@ -27,16 +27,42 @@ const explanationContents = [
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [startTime, setStartTime] = useState<Date>();
+  const [currentTime, setCurrentTime] = useState<number>();
 
   const updateCurrentStep = (nextStepNumber: number) => {
     setCurrentStep(nextStepNumber);
   };
 
+  useEffect(() => {
+    if (currentStep !== explanationContents.length) return;
+    setStartTime(new Date());
+  }, [currentStep]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!startTime) return;
+      const now = new Date();
+      const diffSecond = now.getTime() - startTime.getTime();
+      setCurrentTime(diffSecond / 1000);
+    }, 100);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [startTime]);
+
   return (
     <div className="w-full h-screen">
-      <GoogleMapArea />
+      <GoogleMapArea currentTime={currentTime} />
       {currentStep < explanationContents.length && (
         <ExplanationModal {...explanationContents[currentStep]} updateCurrentStep={updateCurrentStep} />
+      )}
+      {currentStep === explanationContents.length && (
+        <div className="absolute top-0 px-6 py-6 w-full flex justify-center items-center">
+          <div className="w-full h-20 rounded-full flex justify-center items-center text-3xl bg-red-500 text-white">
+            {currentTime?.toFixed(1)}秒
+          </div>
+        </div>
       )}
     </div>
   );
