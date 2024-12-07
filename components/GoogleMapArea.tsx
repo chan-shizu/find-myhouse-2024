@@ -1,4 +1,3 @@
-import { Position } from "@/app/page";
 import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { FC, useState } from "react";
 import "./googleMap.css";
