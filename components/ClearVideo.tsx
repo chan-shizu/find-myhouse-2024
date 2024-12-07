@@ -25,9 +25,9 @@ export const ClearVideo: FC<Props> = ({ updateCurrentStep }) => {
   return (
     <div
       onClick={StartReplay}
-      className="w-full fixed top-0 h-screen bg-white bg-opacity-80 z-10 flex flex-col justify-center"
+      className="w-full fixed top-0 h-screen bg-white bg-opacity-80 z-10 flex flex-col justify-center p-4"
     >
-      <div className="my-auto flex flex-col justify-center gap-y-2 items-center bg-white ">
+      <div className="my-auto flex flex-col justify-center gap-y-2 items-center bg-white px-4 py-10 border border-gray-400 rounded">
         <div>
           <p className="text-sm">画面をクリックしたら動画が再生されます👍</p>
           <p className="text-sm">動画が最後まで流れたら次の画面に行きます👊</p>
