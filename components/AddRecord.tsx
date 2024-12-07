@@ -1,22 +1,29 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button } from "./Button";
 import { insertRecord } from "@/app/ranking/actions/insertRecord";
 
 type Props = { updateCurrentStep: (nextStepNumber: number) => void };
 
 export const AddRecord: FC<Props> = ({ updateCurrentStep }) => {
+  const [isButtonActive, setIsButtonActive] = useState(true);
+
   const onSubmit = async () => {
-    const form = document.getElementById("form") as HTMLFormElement;
-    if (!form) return;
-    const formData = new FormData(form);
-    const name = formData.get("name") as string;
-    const clearTime = localStorage.getItem("clear_time");
-    if (!name || !clearTime) return;
-    await insertRecord(name, clearTime);
-    localStorage.setItem("complete", "true");
-    updateCurrentStep(2);
+    try {
+      setIsButtonActive(false);
+      const form = document.getElementById("form") as HTMLFormElement;
+      if (!form) return;
+      const formData = new FormData(form);
+      const name = formData.get("name") as string;
+      const clearTime = localStorage.getItem("clear_time");
+      if (!name || !clearTime) return;
+      await insertRecord(name, clearTime);
+      localStorage.setItem("complete", "true");
+      updateCurrentStep(2);
+    } catch {
+      setIsButtonActive(true);
+    }
   };
 
   return (
@@ -31,7 +38,7 @@ export const AddRecord: FC<Props> = ({ updateCurrentStep }) => {
             placeholder="こうちゃん"
           />
           <div className="w-60 mx-auto">
-            <Button text="送信" onClick={onSubmit} />
+            <Button text="送信" onClick={onSubmit} isButtonActive={isButtonActive} />
           </div>
         </form>
       </div>
