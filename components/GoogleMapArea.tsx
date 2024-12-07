@@ -1,10 +1,10 @@
 import { Position } from "@/app/page";
 import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import "./googleMap.css";
 import { useRouter } from "next/navigation";
 
-type Props = { currentTime?: number };
+type Props = { transitToRankingPage: () => void };
 export type Position = { lat: number; lng: number };
 
 const containerStyle = {
@@ -33,11 +33,13 @@ const calcDistance = (tappedPosition: Position) => {
   );
 };
 
-export const GoogleMapArea: FC<Props> = ({ currentTime }) => {
+export const GoogleMapArea: FC<Props> = ({ transitToRankingPage }) => {
   const [tappedPositions, setTappedPositions] = useState<Position[]>([]);
   const [size, setSize] = useState<undefined | google.maps.Size>(undefined);
-  const router = useRouter();
-
+  const [currentCenter, setCurrentCenter] = useState<Position>({
+    lat: 43.2203,
+    lng: 142.8365,
+  }); // 初期位置北海道
   const infoWindowOptions = {
     pixelOffset: size,
     minWidth: 80,
@@ -51,10 +53,8 @@ export const GoogleMapArea: FC<Props> = ({ currentTime }) => {
     googleMapsApiKey: googleMapApiKey!,
   });
 
-  if (tappedPositions.length > 0 && calcDistance(tappedPositions[tappedPositions.length - 1]) < 0.3) {
-    if (!currentTime) return;
-    localStorage.setItem("clear_time", currentTime.toFixed(1));
-    router.push("/ranking");
+  if (tappedPositions.length > 0 && calcDistance(tappedPositions[tappedPositions.length - 1]) < 0.5) {
+    transitToRankingPage();
   }
 
   if (!isLoaded) return null;
@@ -76,14 +76,7 @@ export const GoogleMapArea: FC<Props> = ({ currentTime }) => {
     <GoogleMap
       key="google-map"
       mapContainerStyle={containerStyle}
-      center={
-        tappedPositions.length === 0
-          ? {
-              lat: 43.2203,
-              lng: 142.8365,
-            }
-          : tappedPositions[tappedPositions.length - 1]
-      }
+      center={currentCenter}
       zoom={10}
       onClick={onClickMap}
       onLoad={() => createOffsetSize()}

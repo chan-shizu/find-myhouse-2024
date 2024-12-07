@@ -2,6 +2,7 @@
 
 import { ExplanationModal } from "@/components/explanationModal";
 import { GoogleMapArea } from "@/components/GoogleMapArea";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const explanationContents = [
@@ -29,6 +30,7 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
   const [startTime, setStartTime] = useState<Date>();
   const [currentTime, setCurrentTime] = useState<number>();
+  const router = useRouter();
 
   const updateCurrentStep = (nextStepNumber: number) => {
     setCurrentStep(nextStepNumber);
@@ -51,15 +53,21 @@ export default function Home() {
     };
   }, [startTime]);
 
+  const transitToRankingPage = () => {
+    if (!currentTime) return;
+    localStorage.setItem("clear_time", currentTime.toFixed(1));
+    router.push("/ranking");
+  };
+
   return (
     <div className="w-full h-screen">
-      <GoogleMapArea currentTime={currentTime} />
+      <GoogleMapArea transitToRankingPage={transitToRankingPage} />
       {currentStep < explanationContents.length && (
         <ExplanationModal {...explanationContents[currentStep]} updateCurrentStep={updateCurrentStep} />
       )}
       {currentStep === explanationContents.length && (
-        <div className="absolute top-0 px-6 py-6 w-full flex justify-center items-center">
-          <div className="w-full h-20 rounded-full flex justify-center items-center text-3xl bg-red-500 text-white">
+        <div className="absolute top-0 w-full flex justify-center items-center">
+          <div className="w-full h-20 rounded flex justify-center items-center text-3xl bg-gray-500 text-white">
             {currentTime?.toFixed(1)}秒
           </div>
         </div>

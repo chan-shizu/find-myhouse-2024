@@ -21,10 +21,10 @@ export const ExplanationModal: FC<Props> = ({ imagePath, text, buttonText, stepN
         )}
         <div className="p-3">
           <div className="whitespace-break-spaces">{text}</div>
-          <div className="absolute bottom-20 w-[calc(100%_-_24px)] flex justify-center gap-x-3 ">
-            <div className={`w-4 h-4 rounded-full ${stepNumber === 0 ? "bg-black" : "bg-gray-200"}`}></div>
-            <div className={`w-4 h-4 rounded-full ${stepNumber === 1 ? "bg-black" : "bg-gray-200"}`}></div>
-            <div className={`w-4 h-4 rounded-full ${stepNumber === 2 ? "bg-black" : "bg-gray-200"}`}></div>
+          <div className="absolute bottom-[88px] w-[calc(100%_-_24px)] flex justify-center gap-x-3 ">
+            <div className={`w-3 h-3 rounded-full ${stepNumber === 0 ? "bg-black" : "bg-gray-200"}`}></div>
+            <div className={`w-3 h-3 rounded-full ${stepNumber === 1 ? "bg-black" : "bg-gray-200"}`}></div>
+            <div className={`w-3 h-3 rounded-full ${stepNumber === 2 ? "bg-black" : "bg-gray-200"}`}></div>
           </div>
           <div className="absolute bottom-4 w-[calc(100%_-_24px)]">
             <Button onClick={() => updateCurrentStep(stepNumber + 1)} text={buttonText} />
