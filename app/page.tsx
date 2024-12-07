@@ -1,6 +1,6 @@
 "use client";
 
-import { ExplanationModal } from "@/components/explanationModal";
+import { ExplanationModal } from "@/components/ExplanationModal";
 import { GoogleMapArea } from "@/components/GoogleMapArea";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
