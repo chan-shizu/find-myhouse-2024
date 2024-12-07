@@ -7,19 +7,19 @@ import { useEffect, useState } from "react";
 
 const explanationContents = [
   {
-    imagePath: "/sample1.jpg",
-    text: "2年前にフォロワーを激震させたあのゲームが返ってきました！\nこの度引っ越しましたので、僕の家を探していただきます！\n",
+    imagePath: "/find-myhouse-room.jpg",
+    text: "この度引っ越しました！\nそこで二年前に引っ越した時と同様に僕の家を探すゲームをリリースしました！\nちなみに、ロフト込みだと広いですけど、一人で暮らしてます。安心してください。",
     buttonText: "次へ",
     stepNumber: 0,
   },
   {
-    imagePath: "/sample2.jpg",
+    imagePath: "/find-myhouse-map.png",
     text: "ルールは簡単、マップ上で僕の家をタッチ出来からクリアです！\nタッチするたびにタッチした個所と僕の家との距離が表示されるので、それをヒントにして見つけてください!",
     buttonText: "次へ",
     stepNumber: 1,
   },
   {
-    imagePath: "/sample3.jpg",
+    imagePath: "/find-myhouse-ranking.png",
     text: "出来るだけ早い時間でクリアしよう！上位者には良いことがあるかも！\n",
     buttonText: "ゲームスタート",
     stepNumber: 2,

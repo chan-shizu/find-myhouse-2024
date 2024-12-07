@@ -15,7 +15,7 @@ export const ExplanationModal: FC<Props> = ({ imagePath, text, buttonText, stepN
     <div className="p-5 fixed top-0 w-full h-screen bg-white bg-opacity-60">
       <div className="bg-white h-full overflow-auto relative">
         {imagePath && (
-          <div className="w-full aspect-video relative">
+          <div className="w-full h-60 relative border-b-2">
             <Image src={imagePath} alt="画面の画像など" fill className="object-cover" />
           </div>
         )}
