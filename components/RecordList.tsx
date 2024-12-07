@@ -18,7 +18,7 @@ export const RecordList: FC<Props> = ({ currentStep }) => {
     })();
   }, [currentStep]);
 
-  if (records === null) return <p>エラーだああああ！！！</p>;
+  if (records === null) return null;
 
   return (
     <div className="flex flex-col divide-y overflow-auto pb-24">
