@@ -1,9 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import Image from "next/image";
 
-type Props = {};
-
-export const RankingDescription: FC<Props> = ({}) => {
+export const RankingDescription: FC = () => {
   return (
     <div className="flex flex-col items-center border-b border-dashed border-b-yellow-400 pb-4">
       <Image className="mx-auto" src="/crown.svg" alt="王冠の画像" width={80} height={80} />
